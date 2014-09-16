@@ -56,9 +56,11 @@ module LinkedIn
         if domain = options.delete(:domain)
           path += "?email-domain=#{CGI.escape(domain)}"
         elsif id = options.delete(:id)
-          path += "/#{id}"
-        elsif ids = options.delete(:ids)
-          path += "::(#{ids.join(',')})"
+          if id.is_a?(Array)
+            path += "::(#{id.join(',')})"
+          else
+            path += "/#{id}"
+          end
         elsif url = options.delete(:url)
           path += "/url=#{CGI.escape(url)}"
         elsif name = options.delete(:name)
